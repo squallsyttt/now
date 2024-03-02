@@ -22,7 +22,7 @@ class Nowbreath extends Backend
     {
         parent::_initialize();
         $this->model = new \app\admin\model\Nowbreath;
-
+        $this->view->assign("breathUseScenesListList", $this->model->getBreathUseScenesListList());
     }
 
 

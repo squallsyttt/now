@@ -29,7 +29,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'breath_type', title: __('Breath_type')},
                         {field: 'breath_scene', title: __('Breath_scene')},
                         {field: 'breath_voice', title: __('Breath_voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'breath_use_scenes_list', title: __('Breath_use_scenes_list'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
+                        {field: 'breath_use_scenes_list', title: __('Breath_use_scenes_list'), searchList: {"478":__('Breath_use_scenes_list 478'),"44":__('Breath_use_scenes_list 44')}, operate:'FIND_IN_SET', formatter: Table.api.formatter.label},
                         {field: 'breath_length', title: __('Breath_length'), operate:'BETWEEN'},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
