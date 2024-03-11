@@ -17,7 +17,7 @@ class NowBreath extends Api
     //如果接口已经设置无需登录,那也就无需鉴权了
     //
     // 无需登录的接口,*表示全部
-    protected $noNeedLogin = ['test', 'test1','index'];
+    protected $noNeedLogin = ['test', 'test1','index','getBackgroundList'];
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['test2'];
 
@@ -86,6 +86,27 @@ class NowBreath extends Api
 
         $this->success('success', [
             'list' => $indexList,
+            'count' => $count,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'limit' => $limit,
+        ]);
+    }
+
+    public function getBackgroundList()
+    {
+        $params = $this->request->param();
+        $page = $params['page'] ?? 1;
+        $pageSize = $params['page_size'] ?? 10;
+        $limit = ($page-1)*$pageSize;
+
+        $backgroundList = Db::name('nowbreathbackground')
+            ->limit($limit,$pageSize)
+            ->field('id,breath_background_name,breath_background_img,breath_background_voice,breath_background_listen_num')->select();
+        $count = count($backgroundList);
+
+        $this->success('success', [
+            'list' => $backgroundList,
             'count' => $count,
             'page' => $page,
             'pageSize' => $pageSize,
