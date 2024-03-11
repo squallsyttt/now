@@ -17,7 +17,7 @@ class NowVoice extends Api
     //如果接口已经设置无需登录,那也就无需鉴权了
     //
     // 无需登录的接口,*表示全部
-    protected $noNeedLogin = ['test','test1','index','addListen','voiceTypeList'];
+    protected $noNeedLogin = ['test','test1','index','addListen','voiceTypeList','countList','getFriendList'];
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['test2'];
 
@@ -137,6 +137,29 @@ class NowVoice extends Api
         $this->success('success', [
             'list' => $list,
             'count' => $count,
+        ]);
+    }
+
+    public function countList()
+    {
+        $voiceCount = Db::name('nowvoice')->count();
+        $sleepCount = Db::name('nowsleep')->count();
+
+        $list = [
+            'voiceCount' => $voiceCount,
+            'sleepCount' => $sleepCount,
+        ];
+
+        $this->success('success',[
+            'list' => $list,
+        ]);
+    }
+
+    public function getFriendList()
+    {
+        $list = Db::name('nowfriend')->field('id,content,author')->select();
+        $this->success('success',[
+            'list' => $list,
         ]);
     }
 }
