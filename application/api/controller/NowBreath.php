@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\api\controller\now;
+namespace app\api\controller;
 
 use app\common\controller\Api;
 use think\Db;

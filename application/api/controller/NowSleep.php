@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\api\controller\now;
+namespace app\api\controller;
 
 use app\common\controller\Api;
 use think\Db;
@@ -9,7 +9,7 @@ use think\Db;
 /**
  * 示例接口
  */
-class NowVoice extends Api
+class NowSleep extends Api
 {
 
     //如果$noNeedLogin为空表示所有接口都需要登录才能请求
@@ -17,7 +17,7 @@ class NowVoice extends Api
     //如果接口已经设置无需登录,那也就无需鉴权了
     //
     // 无需登录的接口,*表示全部
-    protected $noNeedLogin = ['test','test1','index','addListen','voiceTypeList','countList','getFriendList'];
+    protected $noNeedLogin = ['test', 'test1','index'];
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['test2'];
 
@@ -73,37 +73,17 @@ class NowVoice extends Api
     }
 
 
-    /**
-     * 列表带分页+筛选+搜索
-     * @return void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public function index()
+    public  function index()
     {
-        $where = [];
         $params = $this->request->param();
-        $typeId = $params['type_id'] ?? "";
-        $voice_name = $params['voice_name'] ?? "";
         $page = $params['page'] ?? 1;
         $pageSize = $params['page_size'] ?? 10;
         $limit = ($page-1)*$pageSize;
 
-
-        if($typeId){
-            $where['voice_type'] = $typeId;
-        }
-        if($voice_name){
-            $where['voice_name'] = ['like',"%".$voice_name."%"];
-        }
-
-        $indexList = Db::name('nowvoice')
-            ->where($where)
+        $indexList = Db::name('nowsleep')
             ->limit($limit,$pageSize)
-            ->field('id,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
+            ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         $count = count($indexList);
-
 
         $this->success('success', [
             'list' => $indexList,
@@ -114,52 +94,4 @@ class NowVoice extends Api
         ]);
     }
 
-    public function addListen()
-    {
-        $where = [];
-        $params = $this->request->param();
-        $voice_id = $params['id'];
-        if(!$voice_id){
-            $this->error("声音 id 不能为空 请检查入参",$params);
-        }
-
-        $where['id'] = $voice_id;
-        Db::name('nowvoice')->where($where)->setInc('voice_listen_num');
-        $this->success('success');
-    }
-
-    public function voiceTypeList()
-    {
-        // $params = $this->request->param();
-        $list = Db::name('nowvoicetype')->field('id,type_id,type_name')->select();
-        $count = count($list);
-
-        $this->success('success', [
-            'list' => $list,
-            'count' => $count,
-        ]);
-    }
-
-    public function countList()
-    {
-        $voiceCount = Db::name('nowvoice')->count();
-        $sleepCount = Db::name('nowsleep')->count();
-
-        $list = [
-            'voiceCount' => $voiceCount,
-            'sleepCount' => $sleepCount,
-        ];
-
-        $this->success('success',[
-            'list' => $list,
-        ]);
-    }
-
-    public function getFriendList()
-    {
-        $list = Db::name('nowfriend')->field('id,content,author')->select();
-        $this->success('success',[
-            'list' => $list,
-        ]);
-    }
 }
