@@ -9,7 +9,7 @@ use think\Db;
 /**
  * 示例接口
  */
-class NowVoice extends Api
+class Nowvoice extends Api
 {
 
     //如果$noNeedLogin为空表示所有接口都需要登录才能请求

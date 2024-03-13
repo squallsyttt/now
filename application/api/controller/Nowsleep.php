@@ -9,7 +9,7 @@ use think\Db;
 /**
  * 示例接口
  */
-class NowBreath extends Api
+class Nowsleep extends Api
 {
 
     //如果$noNeedLogin为空表示所有接口都需要登录才能请求
@@ -17,7 +17,7 @@ class NowBreath extends Api
     //如果接口已经设置无需登录,那也就无需鉴权了
     //
     // 无需登录的接口,*表示全部
-    protected $noNeedLogin = ['test', 'test1','index','getBackgroundList'];
+    protected $noNeedLogin = ['test', 'test1','index'];
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['test2'];
 
@@ -72,6 +72,7 @@ class NowBreath extends Api
         $this->success('返回成功', ['action' => 'test3']);
     }
 
+
     public  function index()
     {
         $params = $this->request->param();
@@ -79,9 +80,9 @@ class NowBreath extends Api
         $pageSize = $params['page_size'] ?? 10;
         $limit = ($page-1)*$pageSize;
 
-        $indexList = Db::name('nowbreath')
+        $indexList = Db::name('nowsleep')
             ->limit($limit,$pageSize)
-            ->field('id,breath_type,breath_scene,breath_voice,breath_use_scenes_list,breath_length')->select();
+            ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         $count = count($indexList);
 
         $this->success('success', [
@@ -93,24 +94,4 @@ class NowBreath extends Api
         ]);
     }
 
-    public function getBackgroundList()
-    {
-        $params = $this->request->param();
-        $page = $params['page'] ?? 1;
-        $pageSize = $params['page_size'] ?? 10;
-        $limit = ($page-1)*$pageSize;
-
-        $backgroundList = Db::name('nowbreathbackground')
-            ->limit($limit,$pageSize)
-            ->field('id,breath_background_name,breath_background_img,breath_background_voice,breath_background_listen_num')->select();
-        $count = count($backgroundList);
-
-        $this->success('success', [
-            'list' => $backgroundList,
-            'count' => $count,
-            'page' => $page,
-            'pageSize' => $pageSize,
-            'limit' => $limit,
-        ]);
-    }
 }
