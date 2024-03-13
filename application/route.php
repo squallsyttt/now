@@ -17,9 +17,9 @@ return [
     //变量规则
     '__pattern__' => [
     ],
-    // 域名绑定到模块
-    // '__domain__'  => [
-    //    'admin' => 'admin',
-    //    'api'   => 'api',
-    // ],
+    // 域名绑定到模块77
+    '__domain__'  => [
+       'admin' => 'admin',
+       'api'   => 'api',
+    ],
 ];
