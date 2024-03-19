@@ -1,0 +1,70 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mode_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-mode_type" class="form-control selectpicker" name="row[mode_type]">
+                {foreach name="modeTypeList" item="vo"}
+                    <option value="{$key}" {in name="key" value="478"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-male_voice" class="control-label col-xs-12 col-sm-2">{:__('Male_voice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-male_voice" data-rule="required" class="form-control" size="50" name="row[male_voice]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-male_voice" class="btn btn-danger faupload" data-input-id="c-male_voice" data-mimetype="mp3,wmv" data-multiple="false" data-preview-id="p-male_voice" data-params='{"category":"category1"}'><i class="fa fa-upload"></i> 上传</button></span>
+                    <span><button type="button" id="fachoose-male_voice" class="btn btn-primary fachoose" data-input-id="c-male_voice" data-mimetype="*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-male_voice"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-male_voice"></ul>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="c-female_voice" class="control-label col-xs-12 col-sm-2">{:__('Female_voice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-female_voice" data-rule="required" class="form-control" size="50" name="row[female_voice]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-female_voice" class="btn btn-danger faupload" data-input-id="c-female_voice" data-mimetype="mp3,wmv" data-multiple="false" data-preview-id="p-female_voice" data-params='{"category":"category1"}'><i class="fa fa-upload"></i> 上传</button></span>
+                    <span><button type="button" id="fachoose-female_voice" class="btn btn-primary fachoose" data-input-id="c-female_voice" data-mimetype="*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-female_voice"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-female_voice"></ul>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="c-other_voice" class="control-label col-xs-12 col-sm-2">{:__('Other_voice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-other_voice" data-rule="required" class="form-control" size="50" name="row[other_voice]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-other_voice" class="btn btn-danger faupload" data-input-id="c-other_voice" data-mimetype="mp3,wmv" data-multiple="false" data-preview-id="p-other_voice" data-params='{"category":"category1"}'><i class="fa fa-upload"></i> 上传</button></span>
+                    <span><button type="button" id="fachoose-other_voice" class="btn btn-primary fachoose" data-input-id="c-other_voice" data-mimetype="*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-other_voice"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-other_voice"></ul>
+        </div>
+    </div>
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+        </div>
+    </div>
+</form>
