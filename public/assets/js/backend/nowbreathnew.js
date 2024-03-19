@@ -27,9 +27,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'mode_type', title: __('Mode_type'), searchList: {"478":__('Mode_type 478'),"44":__('Mode_type 44')}, formatter: Table.api.formatter.normal},
-                        {field: 'male_voice', title: __('Male_voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'female_voice', title: __('Female_voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'other_voice', title: __('Other_voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
+                        {field: 'male_voice', title: __('Male_voice'), operate: false, formatter: Table.api.formatter.file},
+                        {field: 'female_voice', title: __('Female_voice'), operate: false, formatter: Table.api.formatter.file},
+                        {field: 'other_voice', title: __('Other_voice'), operate: false, formatter: Table.api.formatter.file},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]
