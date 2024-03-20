@@ -113,4 +113,31 @@ class Nowbreath extends Api
             'limit' => $limit,
         ]);
     }
+
+    /**
+     * 新呼吸模式的列表
+     * @return void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function indexnew(){
+        $params = $this->request->param();
+        $page = $params['page'] ?? 1;
+        $pageSize = $params['page_size'] ?? 10;
+        $limit = ($page-1)*$pageSize;
+
+        $indexList = Db::name('nowbreathnew')
+            ->limit($limit,$pageSize)
+            ->field('id,mode_type,male_voice,female_voice,other_voice')->select();
+        $count = count($indexList);
+
+        $this->success('success', [
+            'list' => $indexList,
+            'count' => $count,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'limit' => $limit,
+        ]);
+    }
 }
