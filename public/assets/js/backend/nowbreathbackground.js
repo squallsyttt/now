@@ -27,8 +27,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'breath_background_name', title: __('Breath_background_name'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'breath_background_img', title: __('Breath_background_img'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'breath_background_voice', title: __('Breath_background_voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
+                        {field: 'breath_background_img', title: __('Breath_background_img'),events: Table.api.events.image, formatter: Table.api.formatter.image},
+                        {field: 'breath_background_voice', title: __('Breath_background_voice'), operate: false, formatter: Table.api.formatter.file},
                         {field: 'breath_background_listen_num', title: __('Breath_background_listen_num')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]

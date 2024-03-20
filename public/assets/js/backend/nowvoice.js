@@ -28,9 +28,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id')},
                         {field: 'voice_name', title: __('Voice_name'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
                         {field: 'voice_type', title: __('Voice_type')},
-                        {field: 'background_img', title: __('Background_img'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'background_video', title: __('Background_video'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'voice', title: __('Voice'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
+                        {field: 'background_img', title: __('Background_img'),events: Table.api.events.image, formatter: Table.api.formatter.image},
+                        {field: 'background_video', title: __('Background_video'),operate: false, formatter: Table.api.formatter.file},
+                        {field: 'voice', title: __('Voice'), operate: false, formatter: Table.api.formatter.file},
                         {field: 'voice_listen_num', title: __('Voice_listen_num')},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
