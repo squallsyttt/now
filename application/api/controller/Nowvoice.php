@@ -83,19 +83,36 @@ class Nowvoice extends Api
     public function index()
     {
         $where = [];
+        $likeWhere = [];
         $params = $this->request->param();
         $typeId = $params['type_id'] ?? "";
         $voice_name = $params['voice_name'] ?? "";
         $page = $params['page'] ?? 1;
         $pageSize = $params['page_size'] ?? 10;
         $limit = ($page-1)*$pageSize;
-
+        $like = $params['like'] ?? [];
+        $likeList = [];
 
         if($typeId){
             $where['voice_type'] = $typeId;
+            $likeWhere['voice_type'] = $typeId;
         }
+
+        //搜索是单独的页面 就不和like牵扯了
         if($voice_name){
             $where['voice_name'] = ['like',"%".$voice_name."%"];
+        }
+
+        //如果是第一页 把like给渲染上
+        if($page == 1 && count($like)>0){
+            $likeWhere['id'] = ['in',$like];
+            $likeList = Db::name('nowvoice')
+                ->where($likeWhere)
+                ->field('id,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
+        }
+
+        if(count($like)>0 && $like[0] > 0 ){
+            $where['id'] = ['not in',$like];
         }
 
         $indexList = Db::name('nowvoice')
@@ -104,6 +121,10 @@ class Nowvoice extends Api
             ->field('id,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
         $count = count($indexList);
 
+        if($page == 1){
+            $indexList = array_merge($likeList,$indexList);
+            $count = count($indexList);
+        }
 
         $this->success('success', [
             'list' => $indexList,

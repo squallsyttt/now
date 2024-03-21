@@ -75,15 +75,30 @@ class Nowsleep extends Api
 
     public  function index()
     {
+        $likeWhere = [];
         $params = $this->request->param();
         $page = $params['page'] ?? 1;
         $pageSize = $params['page_size'] ?? 10;
         $limit = ($page-1)*$pageSize;
+        $like = $params['like'] ?? [];
+        $likeList = [];
+
+        if($page == 1 && count($like)>0){
+            $likeWhere['id'] = ['in',$like];
+            $likeList = Db::name('nowsleep')
+                ->where($likeWhere)
+                ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
+        }
 
         $indexList = Db::name('nowsleep')
             ->limit($limit,$pageSize)
             ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         $count = count($indexList);
+
+        if($page == 1){
+            $indexList = array_merge($likeList,$indexList);
+            $count = count($indexList);
+        }
 
         $this->success('success', [
             'list' => $indexList,
