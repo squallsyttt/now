@@ -132,6 +132,9 @@ class Nowbreath extends Api
             ->field('id,mode_type,male_voice,female_voice,other_voice')->select();
         $count = count($indexList);
 
+
+        $indexList = array_column($indexList,null,'mode_type');
+
         $this->success('success', [
             'list' => $indexList,
             'count' => $count,
