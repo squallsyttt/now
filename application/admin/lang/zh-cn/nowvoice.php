@@ -7,5 +7,6 @@ return [
     'Background_img'   => '声音背景图',
     'Background_video' => '声音背景视频',
     'Voice'            => '播放音乐',
-    'Voice_listen_num' => '在听人数'
+    'Voice_listen_num' => '在听人数',
+    'Rank'             => '序号',
 ];

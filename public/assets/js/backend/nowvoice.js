@@ -26,6 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
+                        {field: 'rank', title: __('Rank')},
                         {field: 'voice_name', title: __('Voice_name'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
                         {field: 'voice_type', title: __('Voice_type')},
                         {field: 'background_img', title: __('Background_img'),events: Table.api.events.image, formatter: Table.api.formatter.image},
