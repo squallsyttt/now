@@ -108,7 +108,7 @@ class Nowvoice extends Api
             $likeWhere['id'] = ['in',$like];
             $likeList = Db::name('nowvoice')
                 ->where($likeWhere)
-                ->field('id,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
+                ->field('id,rank,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
         }
 
         if(count($like)>0 && $like[0] > 0 ){
@@ -116,9 +116,10 @@ class Nowvoice extends Api
         }
 
         $indexList = Db::name('nowvoice')
+            ->order('rank asc')
             ->where($where)
             ->limit($limit,$pageSize)
-            ->field('id,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
+            ->field('id,rank,voice_name,voice_type,background_img,background_video,voice,voice_listen_num')->select();
         $count = count($indexList);
 
         if($page == 1){

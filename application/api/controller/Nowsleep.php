@@ -87,12 +87,13 @@ class Nowsleep extends Api
             $likeWhere['id'] = ['in',$like];
             $likeList = Db::name('nowsleep')
                 ->where($likeWhere)
-                ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
+                ->field('id,rank,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         }
 
         $indexList = Db::name('nowsleep')
+            ->order('rank asc')
             ->limit($limit,$pageSize)
-            ->field('id,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
+            ->field('id,rank,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         $count = count($indexList);
 
         if($page == 1){
