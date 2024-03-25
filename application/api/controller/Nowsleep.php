@@ -75,6 +75,7 @@ class Nowsleep extends Api
 
     public  function index()
     {
+        $where = [];
         $likeWhere = [];
         $params = $this->request->param();
         $page = $params['page'] ?? 1;
@@ -90,8 +91,13 @@ class Nowsleep extends Api
                 ->field('id,rank,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         }
 
+        if(count($like)>0 && $like[0] > 0 ){
+            $where['id'] = ['not in',$like];
+        }
+
         $indexList = Db::name('nowsleep')
             ->order('rank asc')
+            ->where($where)
             ->limit($limit,$pageSize)
             ->field('id,rank,sleep_name,sleep_background_img,sleep_voice,sleep_listen_num')->select();
         $count = count($indexList);
