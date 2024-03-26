@@ -179,7 +179,13 @@ class Nowvoice extends Api
 
     public function getFriendList()
     {
-        $list = Db::name('nowfriend')->field('id,content,author')->select();
+        // 获取当前日期
+        $today = date('Y-m-d');
+        // 对当前日期对 31 取余
+        $remainder = date('j', strtotime($today)) % 31;
+        $where = ['rank',$remainder];
+        //获取今天的日期排序
+        $list = Db::name('nowfriend')->field('id,rank,content,author')->where($where)->select();
         $this->success('success',[
             'list' => $list,
         ]);
