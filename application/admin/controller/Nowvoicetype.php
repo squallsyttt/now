@@ -44,4 +44,11 @@ class Nowvoicetype extends Backend
         $typeList = Db::name('nowvoicetype')->field('type_id,type_name')->select();
         return ['list' => $typeList,'total' => count($typeList)];
     }
+
+    public function getVoiceTypeMap()
+    {
+        $typeList = Db::name('nowvoicetype')->field('type_id,type_name')->select();
+        $newTypeMap = array_column($typeList,'type_name','type_id');
+        return $newTypeMap;
+    }
 }
