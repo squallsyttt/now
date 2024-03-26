@@ -92,6 +92,17 @@ class Nowvoice extends Api
         $limit = ($page-1)*$pageSize;
         $like = $params['like'] ?? [];
         $likeList = [];
+        $type = $params['type'] ?? "";
+
+        if($type == "search" && !$voice_name){
+            $this->success('success', [
+                'list' => [],
+                'count' => 0,
+                'page' => $page,
+                'pageSize' => $pageSize,
+                'limit' => $limit,
+            ]);
+        }
 
         if($typeId){
             $where['voice_type'] = $typeId;
