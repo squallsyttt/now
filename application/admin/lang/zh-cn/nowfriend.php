@@ -3,6 +3,6 @@
 return [
     'Id'      => 'ID',
     'Content' => '内容',
-    'Author'  => '作者',
+    'Author'  => '来源',
     'Rank'    => '序号',
 ];
