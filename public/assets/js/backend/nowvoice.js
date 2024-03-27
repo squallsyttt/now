@@ -22,8 +22,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    console.log(8888);
-                    console.log(response);
                     columns = [
                         [
                             {checkbox: true},
@@ -50,7 +48,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     Table.api.bindevent(table);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.log(777);
                     table.bootstrapTable({
                         url: $.fn.bootstrapTable.defaults.extend.index_url,
                         pk: 'id',
