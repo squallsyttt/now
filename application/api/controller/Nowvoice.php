@@ -17,7 +17,7 @@ class Nowvoice extends Api
     //如果接口已经设置无需登录,那也就无需鉴权了
     //
     // 无需登录的接口,*表示全部
-    protected $noNeedLogin = ['test','test1','index','addListen','voiceTypeList','countList','getFriendList'];
+    protected $noNeedLogin = ['test','test1','index','addListen','voiceTypeList','countList','getFriendList','updateListenDaily'];
     // 无需鉴权的接口,*表示全部
     protected $noNeedRight = ['test2'];
 
@@ -190,6 +190,7 @@ class Nowvoice extends Api
 
     public function getFriendList()
     {
+        date_default_timezone_set('Asia/Shanghai');
         // 获取当前日期
         $today = date('Y-m-d');
         // 对当前日期对 31 取余
@@ -202,4 +203,19 @@ class Nowvoice extends Api
             'list' => $list,
         ]);
     }
+
+    public function updateListenDaily()
+    {
+        date_default_timezone_set('Asia/Shanghai');
+
+        $currentMonth = date('m');
+        $currentDate = date('d');
+
+        $addNum = $currentDate-$currentMonth;
+
+        $res = Db::name('nowvoice')->where('id','neq',0)->setInc('voice_listen_num',$addNum);
+
+        return $res;
+    }
 }
+
