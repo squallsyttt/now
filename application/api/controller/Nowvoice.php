@@ -164,7 +164,9 @@ class Nowvoice extends Api
     public function voiceTypeList()
     {
         // $params = $this->request->param();
-        $list = Db::name('nowvoicetype')->field('id,type_id,type_name')->select();
+        $list = Db::name('nowvoicetype')->field('id,type_id,type_name')
+            ->order('type_id asc')
+            ->select();
         $count = count($list);
 
         $this->success('success', [
