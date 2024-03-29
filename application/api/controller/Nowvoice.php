@@ -188,7 +188,7 @@ class Nowvoice extends Api
         ]);
     }
 
-    public function getFriendList()
+    public function getFriendList2()
     {
         date_default_timezone_set('Asia/Shanghai');
         // 获取当前日期
@@ -198,9 +198,76 @@ class Nowvoice extends Api
         $where = [];
         $where['rank'] = $remainder;
         //获取今天的日期排序
-        $list = Db::name('nowfriend')->field('id,rank,content,author')->where($where)->select();
+        $list = Db::name('nowfriend')->field('id,rank,content,author')
+            ->where($where)->select();
+
         $this->success('success',[
             'list' => $list,
+        ]);
+    }
+
+    public function getFriendList()
+    {
+        $existId = 0;
+        $existRank = 0;
+        // 获取当前日期
+        $today = date('Y-m-d');
+        // 获得 日
+        $remainder = date('j', strtotime($today));
+
+        $where['selected'] = $remainder;
+        $selectedFriend = Db::name('nowfriend')->field('id,rank,content,author,selected')
+            ->order('rank asc')
+            ->where($where)
+            ->select();
+
+
+        //如果找到了合适的 直接就返回了
+        if($selectedFriend){
+            $this->success('success',[
+                'list' => $selectedFriend,
+            ]);
+        }
+
+        $allFriend = Db::name('nowfriend')->field('id,rank,content,author,selected')
+            ->order('rank asc')
+            ->select();
+        //没数据 也直接返回
+        if(!$allFriend){
+            $this->success('success',[
+                'list' => $allFriend,
+            ]);
+        }
+
+        $existSelectedFriend = Db::name('nowfriend')->field('id,rank,content,author,selected')
+            ->order('rank asc')
+            ->where('selected','neq',0)
+            ->select();
+
+        // var_dump($existSelectedFriend);exit;
+
+        if($existSelectedFriend){
+            $existId = $existSelectedFriend[0]['id'];
+            $existRank =$existSelectedFriend[0]['rank'];
+        }
+
+        foreach($allFriend as $key => $value){
+            //如果找到了 rank比他现有的大的 就更新 标记 并且返回
+            if($value['rank'] > $existRank){
+                Db::name('nowfriend')->where('id','neq',0)->update(['selected' => 0]);
+                Db::name('nowfriend')->where('id',$value['id'])->update(['selected' => $remainder]);
+                $this->success('success',[
+                    'list' => [$value],
+                ]);
+            }
+        }
+
+        //如果还没返回就是还没找到 就把 rank 最小的标记 并且返回
+        Db::name('nowfriend')->where('id','neq',0)->update(['selected' => 0]);
+        Db::name('nowfriend')->where('id',$allFriend[0]['id'])->update(['selected' => $remainder]);
+
+        $this->success('success',[
+            'list' => $allFriend,
         ]);
     }
 
